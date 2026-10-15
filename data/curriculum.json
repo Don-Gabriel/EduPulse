@@ -1,0 +1,450 @@
+{
+  "course": {
+    "id": "python-foundations",
+    "title": "Python Foundations",
+    "subtitle": "Find the gap. Practise with purpose. Check understanding independently."
+  },
+  "concepts": [
+    {
+      "id": "boundaries",
+      "title": "Loop boundaries",
+      "description": "Predict the values produced by range: start, exclusive stop, and step.",
+      "prerequisite": null,
+      "misconception": "Treating the stop value as included, or assuming every range starts at zero.",
+      "source": {
+        "title": "Python Tutorial — More Control Flow Tools",
+        "url": "https://docs.python.org/3/tutorial/controlflow.html#the-range-function",
+        "section": "4.3 The range() Function"
+      },
+      "lesson": {
+        "title": "The stop is a boundary, not a value",
+        "summary": "A range describes a sequence of integer values. Start with the first value, move by the step, and stop before crossing the boundary.",
+        "steps": [
+          "Read range(start, stop, step). A missing start is 0; a missing step is 1.",
+          "Write out the first two values to see the direction.",
+          "For a positive step, keep values below stop. For a negative step, keep values above stop.",
+          "Count the values you wrote, not the size of the stop number."
+        ],
+        "example_code": "values = list(range(3, 12, 3))\nprint(values)",
+        "example_output": "[3, 6, 9]",
+        "takeaway": "Check start, direction, and exclusive stop before counting iterations."
+      },
+      "questions": [
+        {
+          "id": "boundaries-1",
+          "phase": "diagnostic",
+          "prompt": "What does this program print?",
+          "code": "print(list(range(4)))",
+          "options": [
+            "[1, 2, 3, 4]",
+            "[0, 1, 2, 3]",
+            "[0, 1, 2, 3, 4]",
+            "[4]"
+          ],
+          "answer": 1,
+          "explanation": "A single argument is the stop. Start defaults to 0, and 4 is excluded, so the values are 0, 1, 2, 3.",
+          "difficulty": 1
+        },
+        {
+          "id": "boundaries-2",
+          "phase": "diagnostic",
+          "prompt": "Which list is printed?",
+          "code": "print(list(range(2, 6)))",
+          "options": [
+            "[2, 3, 4, 5, 6]",
+            "[0, 1, 2, 3, 4, 5]",
+            "[2, 3, 4, 5]",
+            "[3, 4, 5]"
+          ],
+          "answer": 2,
+          "explanation": "The first value is 2, not 0. Stop 6 is excluded; the last value is 5.",
+          "difficulty": 1
+        },
+        {
+          "id": "boundaries-3",
+          "phase": "practice",
+          "prompt": "The step is 2. What list is printed?",
+          "code": "print(list(range(1, 8, 2)))",
+          "options": [
+            "[1, 3, 5, 7]",
+            "[1, 2, 3, 4, 5, 6, 7]",
+            "[2, 4, 6, 8]",
+            "[1, 3, 5, 7, 9]"
+          ],
+          "answer": 0,
+          "explanation": "Start at 1 and add 2: 1, 3, 5, 7. The next value is 9, which crosses the stop boundary.",
+          "difficulty": 2
+        },
+        {
+          "id": "boundaries-4",
+          "phase": "practice",
+          "prompt": "What list is printed when start equals stop?",
+          "code": "print(list(range(5, 5)))",
+          "options": [
+            "[5]",
+            "[0, 1, 2, 3, 4]",
+            "[5, 5]",
+            "[]"
+          ],
+          "answer": 3,
+          "explanation": "The starting value already fails the below-stop condition. There are no values, so the loop would run zero times.",
+          "difficulty": 2
+        },
+        {
+          "id": "boundaries-5",
+          "phase": "practice",
+          "prompt": "The step is negative. What list is printed?",
+          "code": "print(list(range(7, 1, -2)))",
+          "options": [
+            "[7, 5, 3, 1]",
+            "[7, 5, 3]",
+            "[1, 3, 5, 7]",
+            "[]"
+          ],
+          "answer": 1,
+          "explanation": "Subtract 2 each time and keep values strictly above 1: 7, 5, 3. The stop is excluded in both directions.",
+          "difficulty": 2
+        },
+        {
+          "id": "boundaries-6",
+          "phase": "retest",
+          "prompt": "Independent check: which list is printed?",
+          "code": "print(list(range(4, 11, 3)))",
+          "options": [
+            "[4, 7, 10, 11]",
+            "[0, 3, 6, 9]",
+            "[4, 7, 10]",
+            "[4, 5, 6, 7, 8, 9, 10]"
+          ],
+          "answer": 2,
+          "explanation": "Begin at 4 and add 3. Values 4, 7, and 10 are below 11; the next value, 13, is not.",
+          "difficulty": 3
+        },
+        {
+          "id": "boundaries-7",
+          "phase": "retest",
+          "prompt": "Independent check: what list is printed?",
+          "code": "print(list(range(6, 0, -2)))",
+          "options": [
+            "[6, 4, 2]",
+            "[6, 4, 2, 0]",
+            "[0, 2, 4, 6]",
+            "[]"
+          ],
+          "answer": 0,
+          "explanation": "With a negative step, values must remain above stop 0. That gives 6, 4, 2.",
+          "difficulty": 3
+        },
+        {
+          "id": "boundaries-8",
+          "phase": "retest",
+          "prompt": "Independent check: what happens when the default step points away from the stop?",
+          "code": "print(list(range(9, 3)))",
+          "options": [
+            "[9, 8, 7, 6, 5, 4]",
+            "[3, 4, 5, 6, 7, 8]",
+            "[9, 3]",
+            "[]"
+          ],
+          "answer": 3,
+          "explanation": "The default step is positive. Starting at 9 cannot move toward a lower stop of 3, so this range is empty.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "off_by_one",
+      "title": "Off-by-one errors",
+      "description": "Match an intended count or endpoint to the actual range and valid list indices.",
+      "prerequisite": "boundaries",
+      "misconception": "Confusing the number of items with the last valid index, or forgetting to include a desired final value.",
+      "source": {
+        "title": "Python Tutorial — Range and sequence indices",
+        "url": "https://docs.python.org/3/tutorial/controlflow.html#the-range-function",
+        "section": "4.3 The range() Function — range(len(sequence))"
+      },
+      "lesson": {
+        "title": "Count items; then check the endpoints",
+        "summary": "A loop can be valid Python and still do one iteration too few or too many. Compare the actual values with the intended task.",
+        "steps": [
+          "State the intended values or number of repetitions before writing the loop.",
+          "For n repetitions, range(n) visits n values: 0 through n - 1.",
+          "For consecutive integers 1 through n inclusive, use range(1, n + 1).",
+          "A list with n items has valid nonnegative indices 0 through n - 1; range(len(items)) stays within them."
+        ],
+        "example_code": "total = 0\nfor number in range(1, 5):\n    total += number\nprint(total)",
+        "example_output": "10",
+        "takeaway": "Trace the first and last iteration. An exclusive stop is one beyond the last desired integer when step is 1."
+      },
+      "questions": [
+        {
+          "id": "off_by_one-1",
+          "phase": "diagnostic",
+          "prompt": "The author wants five repetitions. How many does this program actually count?",
+          "code": "count = 0\nfor i in range(1, 5):\n    count += 1\nprint(count)",
+          "options": [
+            "5",
+            "6",
+            "4",
+            "1"
+          ],
+          "answer": 2,
+          "explanation": "The values are 1, 2, 3, 4: four repetitions. For five repetitions, range(5) works; for values 1 through 5, use range(1, 6).",
+          "difficulty": 1
+        },
+        {
+          "id": "off_by_one-2",
+          "phase": "diagnostic",
+          "prompt": "What is the final valid nonnegative index for this list?",
+          "code": "scores = [12, 15, 18, 21]\nprint(len(scores) - 1)",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "0"
+          ],
+          "answer": 0,
+          "explanation": "There are four items but indices start at zero. The indices are 0, 1, 2, 3; index 4 would be out of bounds.",
+          "difficulty": 1
+        },
+        {
+          "id": "off_by_one-3",
+          "phase": "practice",
+          "prompt": "The author wants the sum 1 + 2 + 3 + 4. What is actually printed?",
+          "code": "total = 0\nfor number in range(1, 4):\n    total += number\nprint(total)",
+          "options": [
+            "10",
+            "4",
+            "9",
+            "6"
+          ],
+          "answer": 3,
+          "explanation": "The loop visits 1, 2, 3 and adds them to get 6. Stop 4 excludes the intended final term; range(1, 5) would include it.",
+          "difficulty": 2
+        },
+        {
+          "id": "off_by_one-4",
+          "phase": "practice",
+          "prompt": "The loop should count every item. How many items does this version count?",
+          "code": "items = ['red', 'blue', 'green', 'gold']\ncount = 0\nfor i in range(len(items) - 1):\n    count += 1\nprint(count)",
+          "options": [
+            "4",
+            "3",
+            "5",
+            "0"
+          ],
+          "answer": 1,
+          "explanation": "len(items) - 1 is 3, and range(3) visits only 0, 1, 2. Subtracting one from an already exclusive stop skips the final item.",
+          "difficulty": 2
+        },
+        {
+          "id": "off_by_one-5",
+          "phase": "practice",
+          "prompt": "Which list of valid nonnegative indices is printed?",
+          "code": "names = ['Asha', 'Bilal', 'Chen']\nprint(list(range(len(names))))",
+          "options": [
+            "[0, 1, 2, 3]",
+            "[1, 2, 3]",
+            "[0, 1, 2]",
+            "[0, 1]"
+          ],
+          "answer": 2,
+          "explanation": "The length is 3, so range(3) produces exactly the three valid nonnegative indices. Do not add or subtract one from this stop.",
+          "difficulty": 2
+        },
+        {
+          "id": "off_by_one-6",
+          "phase": "retest",
+          "prompt": "Independent check: the goal is to count labels 1 through 6. What is actually printed?",
+          "code": "count = 0\nfor label in range(1, 6):\n    count += 1\nprint(count)",
+          "options": [
+            "5",
+            "6",
+            "7",
+            "1"
+          ],
+          "answer": 0,
+          "explanation": "Labels 1, 2, 3, 4, 5 are visited: five labels. To include label 6, the stop must be 7.",
+          "difficulty": 3
+        },
+        {
+          "id": "off_by_one-7",
+          "phase": "retest",
+          "prompt": "Independent check: which list of positions is printed?",
+          "code": "marks = [8, 9, 10, 11, 12]\nprint(list(range(len(marks))))",
+          "options": [
+            "[1, 2, 3, 4, 5]",
+            "[0, 1, 2, 3, 4, 5]",
+            "[0, 1, 2, 3]",
+            "[0, 1, 2, 3, 4]"
+          ],
+          "answer": 3,
+          "explanation": "Five items have nonnegative indices 0 through 4. range(len(marks)) includes each valid index exactly once.",
+          "difficulty": 3
+        },
+        {
+          "id": "off_by_one-8",
+          "phase": "retest",
+          "prompt": "Independent check: the intention is to add 1 through 5 inclusive. What does this code print?",
+          "code": "total = 0\nfor number in range(1, 6):\n    total += number\nprint(total)",
+          "options": [
+            "10",
+            "15",
+            "21",
+            "6"
+          ],
+          "answer": 1,
+          "explanation": "Stop 6 excludes 6 but includes 5. The visited numbers are 1, 2, 3, 4, 5, whose sum is 15.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "nested_loops",
+      "title": "Nested-loop execution",
+      "description": "Trace an inner loop for each outer iteration, including changing inner bounds.",
+      "prerequisite": "boundaries",
+      "misconception": "Adding iteration counts instead of tracing each inner run, or assuming the inner count is always constant.",
+      "source": {
+        "title": "Python Language Reference — The for statement",
+        "url": "https://docs.python.org/3/reference/compound_stmts.html#the-for-statement",
+        "section": "8.3 The for statement"
+      },
+      "lesson": {
+        "title": "Finish the inner loop before moving on",
+        "summary": "The indented inner loop is part of the outer loop body. Each outer iteration starts another execution of that inner loop.",
+        "steps": [
+          "List the outer values first.",
+          "For each outer value, trace the entire inner range from its start.",
+          "If both counts are fixed, multiply outer count by inner count.",
+          "If the inner bound depends on the outer value, count each inner run separately and add the counts."
+        ],
+        "example_code": "count = 0\nfor row in range(3):\n    for column in range(2):\n        count += 1\nprint(count)",
+        "example_output": "6",
+        "takeaway": "Three rows with two cells each make six inner executions. Changing inner bounds require a row-by-row trace."
+      },
+      "questions": [
+        {
+          "id": "nested_loops-1",
+          "phase": "diagnostic",
+          "prompt": "How many times is the innermost statement counted?",
+          "code": "count = 0\nfor row in range(2):\n    for column in range(3):\n        count += 1\nprint(count)",
+          "options": [
+            "5",
+            "3",
+            "2",
+            "6"
+          ],
+          "answer": 3,
+          "explanation": "Each of the two outer iterations runs all three inner iterations. The total is 3 + 3 = 6, not 2 + 3.",
+          "difficulty": 1
+        },
+        {
+          "id": "nested_loops-2",
+          "phase": "diagnostic",
+          "prompt": "What list is printed?",
+          "code": "pairs = []\nfor row in range(2):\n    for column in range(2):\n        pairs.append((row, column))\nprint(pairs)",
+          "options": [
+            "[(0, 0), (1, 1)]",
+            "[(0, 0), (0, 1), (1, 0), (1, 1)]",
+            "[(0, 0), (1, 0), (0, 1), (1, 1)]",
+            "[(1, 1), (1, 2), (2, 1), (2, 2)]"
+          ],
+          "answer": 1,
+          "explanation": "The inner loop finishes columns 0 and 1 for row 0 before the outer loop moves to row 1.",
+          "difficulty": 1
+        },
+        {
+          "id": "nested_loops-3",
+          "phase": "practice",
+          "prompt": "The inner bound changes with row. What is printed?",
+          "code": "count = 0\nfor row in range(1, 4):\n    for column in range(row):\n        count += 1\nprint(count)",
+          "options": [
+            "6",
+            "9",
+            "3",
+            "12"
+          ],
+          "answer": 0,
+          "explanation": "The outer values are 1, 2, 3. They produce 1, 2, 3 inner executions, so add 1 + 2 + 3 = 6. A constant multiplication would be wrong.",
+          "difficulty": 2
+        },
+        {
+          "id": "nested_loops-4",
+          "phase": "practice",
+          "prompt": "The inner range is empty. What is printed?",
+          "code": "count = 0\nfor row in range(4):\n    for column in range(0):\n        count += 1\nprint(count)",
+          "options": [
+            "4",
+            "1",
+            "0",
+            "8"
+          ],
+          "answer": 2,
+          "explanation": "range(0) has no values. Although the outer loop runs four times, the innermost statement never executes.",
+          "difficulty": 2
+        },
+        {
+          "id": "nested_loops-5",
+          "phase": "practice",
+          "prompt": "The counter increases once after each inner loop. What is printed?",
+          "code": "count = 0\nfor row in range(3):\n    for column in range(2):\n        pass\n    count += 1\nprint(count)",
+          "options": [
+            "6",
+            "5",
+            "2",
+            "3"
+          ],
+          "answer": 3,
+          "explanation": "Indentation places count += 1 outside the inner loop but inside the outer loop. It runs once per row, for a total of 3.",
+          "difficulty": 2
+        },
+        {
+          "id": "nested_loops-6",
+          "phase": "retest",
+          "prompt": "Independent check: how many inner executions are counted?",
+          "code": "count = 0\nfor group in range(3):\n    for item in range(4):\n        count += 1\nprint(count)",
+          "options": [
+            "7",
+            "4",
+            "12",
+            "16"
+          ],
+          "answer": 2,
+          "explanation": "Each of three groups has four inner iterations: 4 + 4 + 4 = 12.",
+          "difficulty": 3
+        },
+        {
+          "id": "nested_loops-7",
+          "phase": "retest",
+          "prompt": "Independent check: the inner bound changes. What is printed?",
+          "code": "count = 0\nfor row in range(1, 5):\n    for column in range(row):\n        count += 1\nprint(count)",
+          "options": [
+            "16",
+            "10",
+            "8",
+            "5"
+          ],
+          "answer": 1,
+          "explanation": "The inner loop runs 1, then 2, then 3, then 4 times. Adding those gives 10; the inner count is not fixed.",
+          "difficulty": 3
+        },
+        {
+          "id": "nested_loops-8",
+          "phase": "retest",
+          "prompt": "Independent check: which order of pairs is printed?",
+          "code": "pairs = []\nfor row in range(1, 3):\n    for column in range(2):\n        pairs.append((row, column))\nprint(pairs)",
+          "options": [
+            "[(1, 0), (1, 1), (2, 0), (2, 1)]",
+            "[(1, 0), (2, 0), (1, 1), (2, 1)]",
+            "[(0, 0), (0, 1), (1, 0), (1, 1)]",
+            "[(1, 1), (2, 2)]"
+          ],
+          "answer": 0,
+          "explanation": "Outer values are 1 and 2. For each one, the inner values 0 and 1 finish in order before the next outer iteration.",
+          "difficulty": 3
+        }
+      ]
+    }
+  ]
+}

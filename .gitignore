@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+.env
+runtime/
+tmp/
+.pytest_cache/
+.claude-flow/
+.swarm/
+*.tsbuildinfo
+artifacts/
